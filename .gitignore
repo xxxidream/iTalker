@@ -1,16 +1,4 @@
-# Windows:
 build
-build/tmp/war/MANIFEST.MF
-build/libs/iTalker-1.0-SNAPSHOT.war
-build/libs/exploded/iTalker-1.0-SNAPSHOT.war/WEB-INF/web.xml
-build/libs/exploded/iTalker-1.0-SNAPSHOT.war/WEB-INF/lib/validation-api-1.1.0.Final.jar
-build/libs/exploded/iTalker-1.0-SNAPSHOT.war/WEB-INF/lib/mchange-commons-java-0.2.11.jar
-build/libs/exploded/iTalker-1.0-SNAPSHOT.war/WEB-INF/lib/jersey-server-2.26-b03.jar
-build/libs/exploded/iTalker-1.0-SNAPSHOT.war/WEB-INF/lib/mysql-connector-java-6.0.6.jar
-.idea/artifacts/Gradle___iTalker___iTalker_1_0_SNAPSHOT_war.xml
-.idea/compiler.xml
-.idea/artifacts/Gradle___iTalker___iTalker_1_0_SNAPSHOT_war__exploded_.xml
-.idea/dataSources.local.xml
-.idea/dataSources/ebcd6928-100f-4a90-9a6f-b4fd01613d48/_metadata_/metadata.len
-.idea/dataSources/ebcd6928-100f-4a90-9a6f-b4fd01613d48/_metadata_/metadata_i.len
-.idea/dataSources/ebcd6928-100f-4a90-9a6f-b4fd01613d48/_metadata_/metadata_i
+.idea
+*.xml
+*.class
