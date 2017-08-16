@@ -1,4 +1,5 @@
 build
 .idea
-*.xml
 *.class
+.gradle/
+iTalker.iml
