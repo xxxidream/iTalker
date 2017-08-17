@@ -3,6 +3,7 @@ package net.qiujuer.web.italker.push;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import java.util.logging.Logger;
 
+import net.qiujuer.web.italker.push.provider.AuthRequestFilter;
 import net.qiujuer.web.italker.push.provider.GsonProvider;
 import net.qiujuer.web.italker.push.service.AccountService;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -13,6 +14,8 @@ public class Application extends ResourceConfig{
 //        packages("net.qiujuer.web.italker.push.service.service");
         packages(AccountService.class.getPackage().getName());
 
+        //注册全局拦截器
+        register(AuthRequestFilter.class);
         //注册Json解析器
 //        register(JacksonJsonProvider.class);
         register(GsonProvider.class);

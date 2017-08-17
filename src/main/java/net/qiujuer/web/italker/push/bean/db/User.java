@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="TB_USER")
-public class User {
+public class User implements Principal {
 
     @Id
     @PrimaryKeyJoinColumn
@@ -70,7 +71,7 @@ public class User {
     @JoinColumn(name = "targetId")
     @LazyCollection(LazyCollectionOption.EXTRA)
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private Set<UserFollow> follower = new HashSet<>();
+    private Set<UserFollow> followers = new HashSet<>();
 
     //我所有创建的群
     //对应的字段为Group.ownerId
@@ -184,12 +185,12 @@ public class User {
         this.following = following;
     }
 
-    public Set<UserFollow> getFollower() {
-        return follower;
+    public Set<UserFollow> getFollowers() {
+        return followers;
     }
 
-    public void setFollower(Set<UserFollow> follower) {
-        this.follower = follower;
+    public void setFollowers(Set<UserFollow> followers) {
+        this.followers = followers;
     }
 
     public Set<Group> getGroups() {

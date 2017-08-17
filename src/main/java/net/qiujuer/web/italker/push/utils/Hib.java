@@ -70,7 +70,7 @@ public class Hib {
     public interface Query<T>{
         T query(Session session);
     }
-    public static void query(QueryOnly query) {
+    public static void queryOnly(QueryOnly query) {
         Session session = sessionFactory.openSession();
         final Transaction transaction = session.beginTransaction();
         try{

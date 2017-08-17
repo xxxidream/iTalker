@@ -1,0 +1,75 @@
+package net.qiujuer.web.italker.push.provider;
+
+import com.google.common.base.Strings;
+import net.qiujuer.web.italker.push.bean.api.base.ResponseModel;
+import net.qiujuer.web.italker.push.bean.db.User;
+import net.qiujuer.web.italker.push.factory.UserFactory;
+import org.glassfish.jersey.server.ContainerRequest;
+
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.ext.Provider;
+import java.awt.event.ContainerListener;
+import java.io.IOException;
+import java.security.Principal;
+
+/**
+ * 请求拦截
+ */
+@Provider
+public class AuthRequestFilter implements ContainerRequestFilter{
+    @Override
+    public void filter(ContainerRequestContext requestContext) throws IOException {
+        String relationPath = ((ContainerRequest)requestContext).getPath(false);
+        //检查是否是登录注册接口
+        if(relationPath.startsWith("account/login")
+                || relationPath.startsWith("account/register")){
+            return;
+        }
+        String token = requestContext.getHeaders().getFirst("token");
+
+        if(!Strings.isNullOrEmpty(token)){
+            final User self = UserFactory.findByToken(token);
+            if(self!=null){
+                //给当前请求添加一个上下文
+                requestContext.setSecurityContext(new SecurityContext() {
+                    //主体部分
+                    @Override
+                    public Principal getUserPrincipal() {
+                        //User 实现Principal 接口
+                        return self;
+                    }
+
+                    @Override
+                    public boolean isUserInRole(String role) {
+                        //可以在这里写入用户的全选
+                        //role是权限名
+                        return false;
+                    }
+
+                    @Override
+                    public boolean isSecure() {
+                        //默认false HTTPS
+                        return false;
+                    }
+
+                    @Override
+                    public String getAuthenticationScheme() {
+                        return null;
+                    }
+                });
+                //写入上下文后返回
+                return;
+            }
+        }
+        //直接返回一个账户需要登录的Model
+        ResponseModel model = ResponseModel.buildAccountError();
+        //停止一个请求的下发，调用改方法后之间返回请求
+        //不会走到service中
+        //构建一个返回
+        Response response = Response.status(Response.Status.OK).entity(model).build();
+        requestContext.abortWith(response);
+    }
+}
